@@ -1,5 +1,5 @@
 
-function Button({type, color, children, action}) {
+function Button({type, color, children}) {
     const colorVariants = {
         blue: 'bg-blue-600 hover:bg-blue-500 text-white',
         red: 'bg-red-500 hover:bg-red-400 text-white',

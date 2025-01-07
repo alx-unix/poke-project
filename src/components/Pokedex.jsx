@@ -1,6 +1,6 @@
-import { useState,useEffect } from "react"
-import Button from "./Button"
-const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/'
+import { useState,useEffect } from "react";
+import {searchPokemon} from '../services/api';
+
 
 
 
@@ -8,23 +8,21 @@ function Pokedex(){
     const [query,setQuery] = useState("");
     const [pokemon,setPokemon] = useState("");
     const [error,setError] = useState(null);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const [soundUrl,setSoundUrl] = useState("");
 
+    console.log(query)
 
-    const searchPokemon = async(e)=>{
+    const handleSearch = async(e)=>{
         e.preventDefault();
         if (!query.trim()) return;
-        if (loading) return;
         console.log("here")
         try{
-            const response =await fetch(BASE_URL + query)
-                if(!response.ok){
-                    throw new Error("Could not find pokemon")
-                }
-            const data = await response.json()
-            setPokemon(data)
-            setError(null)
-            console.log(data)
+            console.log("here2")
+            const pokemonFetched =await searchPokemon(query)
+            setPokemon(pokemonFetched)
+            setSoundUrl(pokemonFetched.cries.legacy)
+            console.log(pokemonFetched)
         }
         
         catch(error){
@@ -35,13 +33,17 @@ function Pokedex(){
             setLoading(false)
         }
     }
+    function play(sound){
+        new Audio(sound).play()
+    }
     
-    console.log(query)
-    
+    useEffect(()=>{
+        play(soundUrl)
+    },[soundUrl])
 
     return (
             <div className="container  mx-auto border-red-600 mt-10">
-                <form onSubmit={searchPokemon}>
+                <form onSubmit={handleSearch}>
                     <input className="mx-4 px-2 py-1" 
                     name = "pokemon"
                     type="text"
@@ -57,10 +59,7 @@ function Pokedex(){
                 {error && <div className="error-message">{error}</div>}
 
                 {loading? (
-                    <button type="button" className="rounded-lg text-center px-4 " disabled>
-                        <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
-                        ...
-                        </svg>
+                    <button type="button" className="rounded-lg text-center px-4 text-white bg-emerald-600 mt-10" disabled>
                         Processing...
                     </button>
                 ):(
@@ -68,8 +67,8 @@ function Pokedex(){
                         className="container w-auto flex flex-col justify-center items-center rounded-md bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 mt-12">
                         <a href="#">
                             <img 
-                                className="rounded-t-lg h-60 center"
-                                src={pokemon.sprite.front_default}
+                                className="rounded-t-lg h-80 center"
+                                src={pokemon.sprites.front_default}
                                 alt="pokemon picture" 
                             />
                         </a>
@@ -81,11 +80,9 @@ function Pokedex(){
                         <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
                             id:{pokemon.id}
                         </p>
-                        <button
-                            type="button"
-                            className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-red-600 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-                            Button
-                        </button>
+                        <ul>
+                            {}
+                        </ul>
                     </div>
                 </div>
                 )}
