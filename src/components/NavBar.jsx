@@ -1,4 +1,4 @@
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton} from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import pokeball from '../assets/images/pokeball.png'
 import ash from '../assets/images/ashe-ketchum.jpg'
@@ -6,11 +6,8 @@ import ash from '../assets/images/ashe-ketchum.jpg'
 const navigation = [
 
 
-    { name: 'Pikachu', href: '#', current: true },
-    { name: 'Charmander', href: '#', current: false },
-    { name: 'Squirtle', href: '#', current: false },
-    { name: 'Bulbasaur', href: '#', current: false },
-    { name: 'Team Rocket', href: '#', current:false}
+    { name: 'Pokedex', href: '#', current: true },
+    { name: 'Team Rocket', href: 'https://www.youtube.com/watch?v=x3lyvJJRJQE&autoplay=1', current: false },
 ]
 
 function classNames(...classes) {
@@ -36,7 +33,7 @@ export default function NavBar() {
                 <img
                     alt="Pokeball"
                     src={pokeball}
-                    className="h-10 w-auto"
+                    className="h-12 w-auto"
                 />
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -48,7 +45,7 @@ export default function NavBar() {
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
                         item.current ? 'bg-white text-grey-500' : 'text-gray-500 hover:bg-yellow-500 hover:text-white',
-                        'rounded-md px-3 py-2 text-sm font-medium',
+                        'rounded-md px-3 py-2 text-md font-medium',
                     )}
                     >
                     {item.name}
@@ -58,16 +55,6 @@ export default function NavBar() {
             </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                    type="button"
-                    className="relative rounded-full bg-yellow-400 p-1 text-gray-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                <span className="absolute -inset-1.5" />
-                <span className="sr-only">View notifications</span>
-                <BellIcon aria-hidden="true" className="size-6" />
-                </button>
-
-            {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
                 <div>
                     <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -76,39 +63,10 @@ export default function NavBar() {
                         <img
                         alt=""
                         src={ash}
-                        className="size-10 rounded-full"
+                        className="size-12 rounded-full"
                         />
                     </MenuButton>
                 </div>
-                <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                >
-                <MenuItem>
-                    <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                    >
-                    Your Profile
-                    </a>
-                </MenuItem>
-                <MenuItem>
-                    <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                    >
-                    Settings
-                    </a>
-                </MenuItem>
-                <MenuItem>
-                    <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                    >
-                    Sign out
-                    </a>
-                </MenuItem>
-                </MenuItems>
             </Menu>
             </div>
         </div>

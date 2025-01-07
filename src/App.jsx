@@ -1,7 +1,8 @@
 import './App.css'
 import NavBar from './components/NavBar'
 import Pokedex from './components/Pokedex'
-import PokemonCard from './components/PokemonCard'
+import Footer from './components/Footer'
+
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
     <>
       <NavBar />
       <Pokedex />
+      <Footer />
     </>
   )
 }

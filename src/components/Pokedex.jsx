@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react";
 import {searchPokemon} from '../services/api';
 import { uppercase } from "../services/uppercase";
+import { classNameFilter } from "../services/classnamefilter";
 
 
 
@@ -24,6 +25,7 @@ function Pokedex(){
             setPokemon(pokemonFetched)
             setSoundUrl(pokemonFetched.cries.legacy)
             console.log(pokemonFetched)
+            setError(null)
         }
         
         catch(error){
@@ -34,25 +36,29 @@ function Pokedex(){
             setLoading(false)
         }
     }
+
+
     function play(sound){
         new Audio(sound).play()
     }
+
+
     
     useEffect(()=>{
         play(soundUrl)
     },[soundUrl])
 
     return (
-            <div className="container  mx-auto border-red-600 mt-10">
+            <div className="container  mx-auto mt-10 flex flex-col items-center">
                 <form onSubmit={handleSearch}>
-                    <input className="mx-4 px-2 py-1" 
+                    <input className="mx-4 px-3 py-2 border-2 border-green-200 rounded-md focus:border-green-600 focus:outline-none" 
                     name = "pokemon"
                     type="text"
                     onChange={(e)=>{setQuery(e.target.value)}}
                     value = {query}
                     placeholder="Pokemon Search"
                     />
-                    <button type="submit" className="search-button bg-amber-500 px-4 py-1 rounded">
+                    <button type="submit" className="search-button bg-red-600 px-4 py-2 rounded-md text-white">
                         Search
                     </button>
                 </form>
@@ -68,7 +74,7 @@ function Pokedex(){
                         className="container w-auto flex flex-col justify-center items-center rounded-md bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 mt-12">
                         <a href="#">
                             <img 
-                                className="rounded-t-lg h-80 center"
+                                className="rounded-t-lg h-80 center border-b-2 rounded-md"
                                 src={pokemon.sprites.front_default}
                                 alt="pokemon picture" 
                             />
@@ -79,10 +85,14 @@ function Pokedex(){
                             {uppercase(pokemon.name)}
                         </h5>
                         <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-                            id: #{pokemon.id}
+                            #{pokemon.id}
                         </p>
-                        <ul>
-                            
+                        <ul className="flex">
+                            {pokemon.types.map(index=>
+                                <li key={pokemon.id + index.type.name} className={`px-5 py-1 border-2 m-2 rounded-2xl ${classNameFilter(index.type.name)}`}>
+                                    {index.type.name}
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </div>

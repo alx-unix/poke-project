@@ -8,7 +8,7 @@ export default {
     extend: {},
     container:{
       center:true
-    }
+    },
   },
   plugins: [],
 }
