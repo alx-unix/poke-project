@@ -10,6 +10,7 @@ function Pokedex(){
     const [error,setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [soundUrl,setSoundUrl] = useState("");
+    const [abilities,setAbilities] = useState([])
 
     console.log(query)
 
@@ -81,7 +82,7 @@ function Pokedex(){
                             id:{pokemon.id}
                         </p>
                         <ul>
-                            {}
+                            
                         </ul>
                     </div>
                 </div>
