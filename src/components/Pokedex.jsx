@@ -13,7 +13,6 @@ function Pokedex(){
     const [soundUrl,setSoundUrl] = useState("");
     const [abilities,setAbilities] = useState([])
 
-    console.log(query)
 
     const handleSearch = async(e)=>{
         e.preventDefault();
